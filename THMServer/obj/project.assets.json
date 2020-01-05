@@ -52,17 +52,21 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Lee\\.nuget\\packages\\": {}
+    "C:\\Users\\Lee\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Lee\\source\\repos\\THMServer\\THMServer\\THMServer.csproj",
+      "projectUniqueName": "C:\\Users\\Lee\\FFCO\\THMServer\\THMServer\\THMServer.csproj",
       "projectName": "THMServer",
-      "projectPath": "C:\\Users\\Lee\\source\\repos\\THMServer\\THMServer\\THMServer.csproj",
+      "projectPath": "C:\\Users\\Lee\\FFCO\\THMServer\\THMServer\\THMServer.csproj",
       "packagesPath": "C:\\Users\\Lee\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Lee\\source\\repos\\THMServer\\THMServer\\obj\\",
+      "outputPath": "C:\\Users\\Lee\\FFCO\\THMServer\\THMServer\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
         "C:\\Users\\Lee\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"

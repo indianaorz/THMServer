@@ -9,15 +9,10 @@ using Newtonsoft.Json;
 namespace THMServer.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]/{id}")]
     public class HighscoreController : ControllerBase
     {
-        private const string FILENAME = "../highscores.json";
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
+        private const string FILENAME = "../highscores/";
         private readonly ILogger<HighscoreController> _logger;
 
         public HighscoreController(ILogger<HighscoreController> logger)
@@ -26,33 +21,41 @@ namespace THMServer.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Highscore> Get()
+        public Highscore Get(string id)
         {
-            if (System.IO.File.Exists(FILENAME))
+            Highscore highscore = new Highscore();
+            var fileName = FILENAME + id + ".json";
+            if (System.IO.File.Exists(fileName))
             {
-                var file = System.IO.File.ReadAllText(FILENAME);
-                var highscores = JsonConvert.DeserializeObject<IEnumerable<Highscore>>(file);
-                return highscores;
+                var file = System.IO.File.ReadAllText(fileName);
+                var highscores = JsonConvert.DeserializeObject<IEnumerable<HighscoreEntry>>(file);
+                highscore.highscores = highscores.ToList();
+                return highscore;
             }
-            return new List<Highscore>();
+            highscore.highscores = new List<HighscoreEntry>();
+            return highscore;
         }
 
         [HttpPost]
-        public IEnumerable<Highscore> PostHighscore(Highscore highscore)
+        public Highscore PostHighscore(string id, HighscoreEntry highscore)
         {
-            var highscores = Get()?.ToList();
+            var fileName = FILENAME + id + ".json";
+            var highscores = Get(id);
             if(highscores == null)
             {
-                highscores = new List<Highscore>();
+                highscores = new Highscore();
+                highscores.highscores = new List<HighscoreEntry>();
             }
 
-            highscores.Add(highscore);
+            highscores.highscores.Add(highscore);
 
-            if (!System.IO.File.Exists(FILENAME))
+            if (!System.IO.File.Exists(fileName))
             {
-                System.IO.File.Create(FILENAME);
+                System.IO.Directory.CreateDirectory(FILENAME);
+                var file = System.IO.File.Create(fileName);
+                file.Close();
             }
-            System.IO.File.WriteAllText(FILENAME, JsonConvert.SerializeObject(highscores.ToList()));
+            System.IO.File.WriteAllText(fileName, JsonConvert.SerializeObject(highscores.highscores.ToList()));
 
             return highscores;
         }
